@@ -1,3 +1,9 @@
+Test by running `modal shell --image ghcr.io/alexkreidler/marker-server:1.0.2-modal`
+
+this checks Modal is compatible with the image and we can get a shell.
+
+From there we can try to run the code/app
+
 ```
 => Step 1: COPY /python/. /usr/local
 
