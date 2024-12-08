@@ -2,6 +2,14 @@ https://docker.io/v2/nvidia/cuda/manifests/12.4.1-cudnn-runtime-ubuntu22.04
 
 https://registry-1.docker.io/v2/nvidia/cuda/manifests/12.4.1-cudnn-runtime-ubuntu22.04
 
+
+```
+docker buildx build --builder cloud-alexkreidler-default-builder -f docker/Dockerfile.modal --push --tag alexkreidler/marker-server:1.0.2-modal --platform linux/amd64 .
+```
+Need platform cause on mac it defaults to linux/arm64?
+
+Cache does work, only took 20 seconds to run the build adding chmod.
+
 ```
 
 al@Als-MacBook-Air ~> docker  --log-level=debug  manifest inspect -v nvidia/cuda:12.4.1-cudnn-runtime-ubuntu22.04

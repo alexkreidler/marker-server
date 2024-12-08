@@ -16,6 +16,8 @@ COPY . .
 
 RUN pixi install
 
+RUN chmod +x /app/modal-entrypoint.sh
+
 EXPOSE 8000
 
 ENV PATH=/app/.pixi/envs/default/bin:$PATH

@@ -39,6 +39,8 @@ jobs:
           file: docker/Dockerfile.beam
           push: true
           tags: ghcr.io/${{ github.repository }}:1.0.2-beam
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       - name: Build and push modal image
         uses: docker/build-push-action@v2
@@ -47,3 +49,5 @@ jobs:
           file: docker/Dockerfile.modal
           push: true
           tags: ghcr.io/${{ github.repository }}:1.0.2-modal
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
