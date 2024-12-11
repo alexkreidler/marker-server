@@ -1,4 +1,6 @@
-from beam import Image, asgi
+
+from beam import Image, asgi, endpoint
+from beam import CloudBucket, CloudBucketConfig, function
 
 image = (
     Image(
@@ -18,18 +20,51 @@ def init_models():
     )
     return converter
 
+research_docs = CloudBucket(
+    name="research_docs",
+    mount_path="./research_docs",
+    config=CloudBucketConfig(
+        access_key="S3_KEY",
+        secret_key="S3_SECRET",
+        read_only=True,
+    ),
+)
+
+
 # WIP
-@asgi(
-    name="marker-pdf-converter-3",
+@endpoint(
+    name="marker-pdf-converter-4",
     image=image,
     on_start=init_models,
     memory=2048,
+    volumes=[research_docs]
 )
-def handler(context):
-    from server import make_server
+def handler(context, **args):
+    import time
+    start_time = time.time()
+    from marker.converters.pdf import PdfConverter
+    from marker.models import create_model_dict
+    from marker.renderers.markdown import MarkdownOutput
+    import os
 
     converter = context.on_start_value
 
-    app = make_server(converter)
+    file_name = args["file_name"]
+    if not file_name:
+        return "Error: no file name provided"
+    
+    file_path = os.path.join(research_docs.mount_path, file_name)
+    
+    conversion_start_time = time.time()
 
-    return app
+    rendered: MarkdownOutput = converter(file_path)
+
+    conversion_time = time.time() - conversion_start_time
+
+    return {
+        "filename": file_name,
+        "size": os.path.getsize(file_path),
+        "start_time": start_time,
+        "conversion_duration": conversion_time,
+        "markdown": rendered.markdown
+    }

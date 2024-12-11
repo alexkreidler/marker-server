@@ -9,7 +9,6 @@ version = "0.1.0"
 [tasks]
 
 [dependencies]
-fastapi = "*"
 python = "3.10.*"
 numpy = ">=2.1.3,<3"
 scipy = ">=1.14.1,<2"
