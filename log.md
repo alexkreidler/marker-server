@@ -63,3 +63,11 @@ return _bootstrap._gcd_import(name[level:], package, level)
 ImportError: libGL.so.1: cannot open shared object file: No such file or directory
 During handling of the above exception, another exception occurred:
 ```
+
+Optimized concurrent model loading, now takes about 30 seconds to load instead of over a minute. Cold start time is about 40 seconds. Cuttinng down container size
+
+Consistently takes about 8 seconds when prewarmed. Boosting up to 4 CPUs increased execution times to around 10 seconds
+
+Uses up to 4.3 RAM, 6.3 VRAM (on the A10Gs, less about 4.3 on the A100, maybe cause getting throttled/combined with other stuff) CPU utilization goes up to 4 cores, GPU to 20-66%
+
+Memory doesn't really go back down?
