@@ -27,3 +27,4 @@ drive/MyDrive
 .next/
 .circleci
 .pixi/
+.terraform/

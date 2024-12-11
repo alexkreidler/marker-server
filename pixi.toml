@@ -18,3 +18,4 @@ pip = ">=24.3.1,<25"
 [pypi-dependencies]
 marker-pdf = "*"
 beam-client = "*"
+modal = ">=0.67.43, <0.68"

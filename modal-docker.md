@@ -22,3 +22,7 @@ Building image im-9t8Ub1jZ9dq7zWTuqAeuxb
 
 => Step 0: FROM base
 ```
+
+
+Runner failed with exit code: 127
+python: 1: ./docker/entrypoint.sh: not found

@@ -14,6 +14,8 @@
 
 ## Modal
 
+Modal primarily uses Oracle Cloud Infrastructure (OCI) for its underlying GPU and compute resources. [1](https://www.oracle.com/customers/modal-labs/)
+
 [Source](https://modal.com/pricing)
 
 | GPU Models         | Memory | Per Second | Per Hour |
@@ -35,6 +37,14 @@ Runner failed with exception: container exited successfully but never requested 
 ```
 
 Doesn't actually get the inputs or start the endpoint properly? https://github.com/modal-labs/modal-client/issues/2625
+
+
+```
+
+Runner failed with exit code: 127
+python: 1: ./docker/entrypoint.sh: not found
+
+```
 
 ## Beam
 
@@ -91,18 +101,33 @@ Doesn't use the Python interpreter from the virtualenv I set up in docker: https
 Error: failed to provision seed volumes: failed to create volume: Your organization does not have enough trust to access GPU machines. Please contact billing@fly.io to remove the restriction.
 ```
 
+## Cerebrium
+
+[Source](https://www.cerebrium.ai/pricing)
+
+| GPU       | Memory | Cost per Second | Cost per Hour |
+| --------- | ------ | --------------- | ------------- |
+| T4        | 16GB   | $0.000164       | $0.5904       |
+| L4        | 24GB   | $0.000222       | $0.7992       |
+| A10       | 24GB   | $0.000306       | $1.1016       |
+| L40s      | 48GB   | $0.000750       | $2.70         |
+| A100 40GB | 40GB   | $0.000772       | $2.7792       |
+| H100      | 80GB   | $0.001267       | $4.5612       |
+| A100 80GB | 80GB   | $0.001553       | $5.5908       |
+
 ## Overview
-| GPU Model               | Memory | Runpod Flex | Runpod Active | Modal | Beam  | Baseten | Fly.io |
-| ----------------------- | ------ | ----------- | ------------- | ----- | ----- | ------- | ------ |
-| H100                    | 80 GB  | $5.59       | $4.47         | $4.56 | -     | $9.98   | -      |
-| A100                    | 80 GB  | $2.72       | $2.17         | $3.40 | -     | $6.14   | $3.50  |
-| A100                    | 40 GB  | -           | -             | $2.78 | $2.75 | -       | $2.50  |
-| H100 MIG                | 40 GB  | -           | -             | -     | -     | $4.95   | -      |
-| A6000, A40              | 48 GB  | $1.22       | $0.85         | -     | -     | -       | -      |
-| L40, L40S, 6000 Ada PRO | 48 GB  | $1.90       | $1.33         | -     | -     | -       | $1.25  |
-| A10G                    | 24 GB  | -           | -             | $1.10 | $1.05 | $1.21   | $1.50  |
-| L4                      | 24 GB  | $0.69       | $0.48         | $0.80 | -     | $0.85   | -      |
-| A5000, 3090             | 24 GB  | $0.69       | $0.48         | -     | -     | -       | -      |
-| 4090 PRO                | 24 GB  | $1.10       | $0.77         | -     | $0.69 | -       | -      |
-| A4000, A4500, RTX 4000  | 16 GB  | $0.58       | $0.40         | -     | -     | -       | -      |
-| T4                      | 16 GB  | -           | -             | $0.59 | $0.54 | $0.63   | -      |
+
+| GPU Model               | Memory | Runpod Flex | Runpod Active | Modal | Beam  | Baseten | Fly.io | Cerebrium |
+| ----------------------- | ------ | ----------- | ------------- | ----- | ----- | ------- | ------ | --------- |
+| H100                    | 80 GB  | $5.59       | $4.47         | $4.56 | -     | $9.98   | -      | $4.56     |
+| A100                    | 80 GB  | $2.72       | $2.17         | $3.40 | -     | $6.14   | $3.50  | $5.59     |
+| A100                    | 40 GB  | -           | -             | $2.78 | $2.75 | -       | $2.50  | $2.78     |
+| H100 MIG                | 40 GB  | -           | -             | -     | -     | $4.95   | -      | -         |
+| A6000, A40              | 48 GB  | $1.22       | $0.85         | -     | -     | -       | -      | -         |
+| L40, L40S, 6000 Ada PRO | 48 GB  | $1.90       | $1.33         | -     | -     | -       | $1.25  | $2.70     |
+| A10G                    | 24 GB  | -           | -             | $1.10 | $1.05 | $1.21   | $1.50  | -         |
+| L4                      | 24 GB  | $0.69       | $0.48         | $0.80 | -     | $0.85   | -      | $0.80     |
+| A5000, 3090             | 24 GB  | $0.69       | $0.48         | -     | -     | -       | -      | -         |
+| 4090 PRO                | 24 GB  | $1.10       | $0.77         | -     | $0.69 | -       | -      | -         |
+| A4000, A4500, RTX 4000  | 16 GB  | $0.58       | $0.40         | -     | -     | -       | -      | -         |
+| T4                      | 16 GB  | -           | -             | $0.59 | $0.54 | $0.63   | -      | $0.59     |

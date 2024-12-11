@@ -10,23 +10,17 @@ import time
 app = modal.App("marker")
 
 image = (
-    modal.Image.from_registry("nvidia/cuda:12.4.1-cudnn-runtime-ubuntu22.04", add_python="3.11")
-    .apt_install(
-        "libglapi-mesa", 
-        "libegl-mesa0", 
-        "libegl1", 
-        "libopengl0", 
-        "libgl1-mesa-glx", 
-        "libglib2.0-0", 
-        "libsm6", 
-        "libxrender1", 
-        "libxext6"
-    )
-    .pip_install("fastapi", "torch", "scipy", "numpy", "marker-pdf", "python-multipart")  # Add other necessary Python packages
+    modal.Image.from_registry("ghcr.io/alexkreidler/marker-server:1.0.2-modal-2", add_python="3.10")
+    .pip_install("fastapi", "torch", "scipy", "numpy", "marker-pdf", "python-multipart")
+    .copy_local_file("./modal-entrypoint.sh", "/modal-entrypoint.sh")
+    .dockerfile_commands([
+                "RUN chmod +x /modal-entrypoint.sh",
+            ]
+        )
+        .entrypoint(["/modal-entrypoint.sh"])
+
 )
 
-# ImportError: libGL.so.1: cannot open shared object file: No such file or directory
-# Runner failed with exception: ImportError('libGL.so.1: cannot open shared object file: No such file or directory')
 @app.function(
     image=image,
     gpu=modal.gpu.A10G(count=1),
