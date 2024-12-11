@@ -30,8 +30,15 @@
 | Physical core (2 vCPU) | $0.000038       | $0.135        |
 | Memory (per GiB)       | $0.00000667     | $0.024        |
 
+```
+Runner failed with exception: container exited successfully but never requested inputs
+```
+
+Doesn't actually get the inputs or start the endpoint properly? https://github.com/modal-labs/modal-client/issues/2625
 
 ## Beam
+
+Pros: Their core [serverless GPU framework is open-source](https://github.com/beam-cloud/beta9), so you can self-host it or debug/contribute to fix issues you may run into.
 
 [Source](https://www.beam.cloud/pricing)
 
@@ -47,6 +54,14 @@
 | CPU (per core) | $0.190        |
 | RAM (per GB)   | $0.020        |
 | File Storage   | Included      |
+
+```
+Exiting worker due to startup error
+from marker.converters.pdf import PdfConverter
+ModuleNotFoundError: No module named 'marker'
+```
+
+Doesn't use the Python interpreter from the virtualenv I set up in docker: https://github.com/beam-cloud/beta9/issues/774
 
 ## Baseten
 
@@ -71,6 +86,10 @@
 | L40S          | 48 GB  | $1.25         |
 | A100 40G PCIe | 40 GB  | $2.50         |
 | A100 80G SXM  | 80 GB  | $3.50         |
+
+```
+Error: failed to provision seed volumes: failed to create volume: Your organization does not have enough trust to access GPU machines. Please contact billing@fly.io to remove the restriction.
+```
 
 ## Overview
 | GPU Model               | Memory | Runpod Flex | Runpod Active | Modal | Beam  | Baseten | Fly.io |

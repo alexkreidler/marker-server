@@ -51,3 +51,15 @@ TODO: investigate getting image size even smaller. Do we need torch?
 
 Local
 docker build -f ./docker/Dockerfile.cpu -t alexkreidler/marker-server:1.0.2-cpu --platform linux/amd64  --progress=plain .
+
+
+```
+
+native_module = importlib.import_module("cv2")
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/usr/local/lib/python3.11/importlib/__init__.py", line 126, in import_module
+return _bootstrap._gcd_import(name[level:], package, level)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: libGL.so.1: cannot open shared object file: No such file or directory
+During handling of the above exception, another exception occurred:
+```

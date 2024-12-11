@@ -1,28 +1,9 @@
 
 FROM nvidia/cuda:12.4.1-cudnn-runtime-ubuntu22.04
-ARG PIXI_VERSION=0.39.0
 
-WORKDIR /app
+# Will be Python 3.10
+RUN apt-get update && apt-get install -y libglapi-mesa libegl-mesa0 libegl1 libopengl0 libgl1-mesa-glx libglib2.0-0 libsm6 libxrender1 libxext6 python3 && rm -rf /var/lib/apt/lists/*
 
-RUN apt-get update && apt-get install -y \
-    curl \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN curl -Ls \
-    "https://github.com/prefix-dev/pixi/releases/download/v${PIXI_VERSION}/pixi-$(uname -m)-unknown-linux-musl" \
-    -o /usr/local/bin/pixi && chmod +x /usr/local/bin/pixi
-
-COPY . .
-
-RUN pixi install
-
-RUN chmod +x /app/modal-entrypoint.sh
-
-EXPOSE 8000
-
-ENV PATH=/app/.pixi/envs/default/bin:$PATH
-ENV CONDA_PREFIX=/app/.pixi/envs/default
+RUN HF_HUB_ENABLE_HF_TRANSFER=TRUE huggingface-cli download vikp/surya_det3 vikp/surya_tablerec vikp/surya_rec2 vikp/texify datalab-to/surya_layout0
 
 ENTRYPOINT "/app/modal-entrypoint.sh"
-
-# CMD ["uvicorn", "src.server:app", "--host", "0.0.0.0", "--port", "8000"]

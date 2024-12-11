@@ -11,8 +11,18 @@ app = modal.App("marker")
 
 image = (
     modal.Image.from_registry("nvidia/cuda:12.4.1-cudnn-runtime-ubuntu22.04", add_python="3.11")
-    .apt_install("curl", "libcairo2", "libpango1.0-0", "libgdk-pixbuf2.0-0")
-    .pip_install("fastapi", "uvicorn", "marker-pdf")  # Add other necessary Python packages
+    .apt_install(
+        "libglapi-mesa", 
+        "libegl-mesa0", 
+        "libegl1", 
+        "libopengl0", 
+        "libgl1-mesa-glx", 
+        "libglib2.0-0", 
+        "libsm6", 
+        "libxrender1", 
+        "libxext6"
+    )
+    .pip_install("fastapi", "torch", "scipy", "numpy", "marker-pdf", "python-multipart")  # Add other necessary Python packages
 )
 
 # ImportError: libGL.so.1: cannot open shared object file: No such file or directory
