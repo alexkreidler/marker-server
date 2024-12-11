@@ -1,0 +1,21 @@
+FROM ghcr.io/prefix-dev/pixi:0.39.0-bookworm-slim AS build
+
+WORKDIR /app
+COPY pixi.* .
+RUN pixi install -v --locked
+
+FROM debian:12 AS production
+WORKDIR /app
+
+# https://github.com/conda-forge/opencv-feedstock/issues/401 and some stackoverflow
+RUN apt-get update && apt-get install -y libglapi-mesa libegl-mesa0 libegl1 libopengl0 libgl1-mesa-glx libglib2.0-0 libsm6 libxrender1 libxext6 && rm -rf /var/lib/apt/lists/*
+
+COPY --from=build /app/.pixi/envs/default /app/.pixi/envs/default
+COPY ./src/ /app
+EXPOSE 8000
+
+ENV PATH=/app/.pixi/envs/default/bin:$PATH
+ENV CONDA_PREFIX=/app/.pixi/envs/default
+ENTRYPOINT []
+EXPOSE 8000
+CMD [ "python", "/app/server.py" ]

@@ -1,4 +1,7 @@
-def make_server():
+from typing import Any
+
+
+def make_server(converter: Any = None):
     import time
     from fastapi import FastAPI, File, UploadFile
     from fastapi.responses import JSONResponse
@@ -10,7 +13,7 @@ def make_server():
 
     app = FastAPI()
 
-    converter = PdfConverter(
+    converter = converter if converter else PdfConverter(
         artifact_dict=create_model_dict(),
     )
 
@@ -44,7 +47,7 @@ def make_server():
     
     return app
 
-# if __name__ == "__main__":
-#     import uvicorn
-#     app = make_server()
-#     uvicorn.run(app, host="0.0.0.0", port=8000)
+if __name__ == "__main__":
+    import uvicorn
+    app = make_server()
+    uvicorn.run(app, host="0.0.0.0", port=8000)
