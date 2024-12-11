@@ -6,7 +6,7 @@ image = (
         python_version="python3.11",
     )
     .add_commands(["apt-get update -y", "apt-get install libglapi-mesa libegl-mesa0 libegl1 libopengl0 libgl1-mesa-glx libglib2.0-0 libsm6 libxrender1 libxext6 -y"])
-    .add_python_packages(["fastapi", "torch", "scipy", "numpy", "marker-pdf", "hf-transfer"])
+    .add_python_packages(["fastapi", "torch", "scipy", "numpy", "marker-pdf", "python-multipart"])
 )
 
 

@@ -3,4 +3,6 @@ FROM nvidia/cuda:12.3.2-runtime-ubuntu22.04
 # Will be Python 3.10
 RUN apt-get update && apt-get install -y libglapi-mesa libegl-mesa0 libegl1 libopengl0 libgl1-mesa-glx libglib2.0-0 libsm6 libxrender1 libxext6 python3 && rm -rf /var/lib/apt/lists/*
 
+RUN pip install -U "huggingface_hub[cli]" hf-transfer
+
 RUN HF_HUB_ENABLE_HF_TRANSFER=TRUE huggingface-cli download vikp/surya_det3 vikp/surya_tablerec vikp/surya_rec2 vikp/texify datalab-to/surya_layout0
